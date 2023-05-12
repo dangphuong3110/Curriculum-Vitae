@@ -14,9 +14,18 @@ return new class extends Migration
         Schema::create('abouts', function (Blueprint $table) {
             $table->id('about_id');
             $table->text('content');
+            $table->string('phone_number');
+            $table->text('address');
+            $table->unsignedBigInteger('age');
+            $table->text('image');
+            $table->text('fb_link');
+            $table->text('twitter_link');
+            $table->text('google_link');
+            $table->text('ins_link');
+            $table->text('profession');
             $table->text('language');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

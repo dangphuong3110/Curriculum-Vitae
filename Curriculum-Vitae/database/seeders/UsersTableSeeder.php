@@ -15,17 +15,9 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'username' => 'Nguyen Dang Phuong',
-            'email' => 'admin@gmail.com',
-            'password'=> Hash::make('admin'),
-            'phone_number' => '0329603xxx',
-            'address' => 'Cau Giay, Ha Noi',
-            'age' => 21,
-            'image' => 'user1.jpg',
-            'fb_link' => 'https://www.facebook.com/ndp.3110/',
-            'twitter_link' => '',
-            'google_link' => '',
-            'ins_link' => '',
+            'name' => 'Nguyen Dang Phuong',
+            'email' => 'nguyendangphuong@gmail.com',
+            'password'=> Hash::make('abc'),
         ]);
     }
 }

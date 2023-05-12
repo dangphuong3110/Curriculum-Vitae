@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +19,30 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/guest');;
 });
+
+Route::get('/cv/{user_id}', function($user_id){
+    $homeController = new HomeController;
+    return $homeController->index($user_id);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/guest', function () {
+        return view('index');
+    })->name('guest');
+
+    // Route::get('/logout', function () {
+    //     Auth::logout();
+    //     return redirect('/login');
+    // })->name('logout');
+});
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
+Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login');
+
+
+
+
+

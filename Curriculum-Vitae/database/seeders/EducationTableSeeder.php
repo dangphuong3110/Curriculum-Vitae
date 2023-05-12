@@ -6,14 +6,14 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class EducationsTableSeeder extends Seeder
+class EducationTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('educations')->insert([
+        DB::table('education')->insert([
             [
                 'major' => 'Science and Mathematics',
                 'degree' => 'High School',
