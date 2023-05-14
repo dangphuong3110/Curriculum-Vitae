@@ -1,58 +1,77 @@
 @extends('login/layout')
 @section('content')
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">CREATIVE CV</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    </div>
-</nav>
-    <div class="container mt-5">
-        <div class="card">
-            <div class="card-header fw-bold">Login to create CV</div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <div class="row">
-                            <div class="col-2">
-                                <label for="email">{{ __('Email') }}</label>
-                                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus />
-                                @error('email')
-                                    <span role="alert" style="color: red">
-                                        <br>
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-2">
-                                <label for="password">{{ __('Password') }}</label>
-                                <input id="password" type="password" name="password" required />
-                                @error('password')
-                                    <span role="alert" style="color: red">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div>
-                                <label for="remember_me">
-                                    <input id="remember_me" type="checkbox" name="remember" class="mt-3">
-                                    {{ __('Remember me') }}
-                                </label>
-                            </div>
-
-                            <div>
-                                <button type="submit" class="btn-success mt-3">
-                                    {{ __('Login') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<div class="wrapper">
+    <!-- <span class="icon-close">
+        <ion-icon name="close"></ion-icon>
+    </span> -->
+    <div class="form-box login">
+        <h2>Login</h2>
+        <form action="{{ route('login') }}" method="POST">
+            @csrf
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus>
+                <label for="email">Email</label>
+                @error('email')
+                    <span role="alert" style="color: red; font-size: 12px;">
+                        <br>
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
-        </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="password" id="password" required>
+                <label for="password">Password</label>
+                @error('password')
+                    <span role="alert" style="color: red; font-size: 12px;">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <div class="remember-forgot">
+                <label for="remember_me">
+                    <input type="checkbox" name="remember" id="remember">
+                    Remember me
+                </label>
+                <a href="#">Forgot Password?</a>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <div class="login-register">
+                <p>Don't have an account? <a href="#" class="register-link">Register</a></p>
+            </div>
+        </form>
     </div>
+
+    <div class="form-box register">
+        <h2>Registration</h2>
+        <form action="#">
+            <div class="input-box">
+                <span class="icon"><ion-icon name="person"></ion-icon></span>
+                <input type="text" name="username" id="username" required autofocus>
+                <label for="username">Username</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" name="email" id="email" required>
+                <label for="email">Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" name="password" id="password" required>
+                <label for="password">Password</label>
+            </div>
+            <div class="remember-forgot">
+                <label for="remember_me">
+                    <input type="checkbox" name="remember" id="remember">
+                    I agree to the terms & conditions
+                </label>
+            </div>
+            <button type="submit" class="btn">Register</button>
+            <div class="login-register">
+                <p>Already have an account? <a href="#" class="login-link">Login</a></p>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
