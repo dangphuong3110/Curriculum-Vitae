@@ -1,0 +1,59 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: url('../images/background-image.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.option {
+    flex-grow: 1;
+}
+
+.option .col-md-3 { 
+    cursor: pointer;
+}
+
+.option h5 {
+    margin: 0;
+    color: black;
+}
+
+.option .change-password:hover {
+    background-color: #0d6efd;
+}
+
+.option .change-about:hover {
+    background-color: #6c757d;
+}
+
+.option .change-skills:hover {
+    background-color: #198754;
+}
+
+.option .change-portfolio:hover {
+    background-color: #dc3545;
+}
+
+.option .change-work-experience:hover {
+    background-color: #ffc107;
+}
+
+.option .change-education:hover {
+    background-color: #0dcaf0;
+}
+
+.option .col-md-3:hover h5 {
+    color: #fff;
+}
+
+.footer {
+    padding-top: 20px;
+    background-color: #edecec;
+    margin-top: auto;
+}

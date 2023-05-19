@@ -535,8 +535,15 @@ nav ul li a:visited {
 }
 
 /* FOOTER */
-.footer {
+/* .footer {
     padding: 24px 0;
+    background-color: #edecec;
+} */
+
+.footer h4 ,
+.footer p {
+    margin: 0;
+    padding-bottom: 10px;
 }
 
 .btn.btn-link {
