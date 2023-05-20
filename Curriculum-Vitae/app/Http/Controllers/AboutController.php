@@ -81,15 +81,24 @@ class AboutController extends Controller
         $image = $request->file('image');
 
         if($image) {
-            if($about->image) {
-                $oldImagePath = public_path('images/users_img/' . $about->image);
-                if(file_exists($oldImagePath)) {
-                    unlink($oldImagePath);
+            $extension = $image->getClientOriginalExtension();
+
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if(in_array($extension, $allowedExtensions)) {
+                if($about->image) {
+                    $oldImagePath = public_path('images/users_img/' . $about->image);
+                    if(file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
                 }
+                $imageName = 'user' . $about->user_id . '.jpg';
+                $image->move(public_path('images/users_img'), $imageName);
+                $about->image = $imageName;
             }
-            $imageName = 'user' . $about->user_id . '.jpg';
-            $image->move(public_path('images/users_img'), $imageName);
-            $about->image = $imageName;
+            else {
+                return redirect()->route('about.edit', $id)->with('failure', 'The uploaded file must be in the correct image format (jpg, jpeg, png, gif).');
+            }
+            
         }
 
         $about->save();

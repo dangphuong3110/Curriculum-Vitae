@@ -33,7 +33,8 @@
                         <tr>
                             <th class="text-center fs-6">Skill Name</th>
                             <th class="text-center fs-6">Skill Level (%)</th>
-                            <th class="text-center fs-6">Action</th>
+                            <th class="text-center fs-6">Edit</th>
+                            <th class="text-center fs-6">Delete</th>
                         </tr>
                         @if(count($skills) > 0)
 
@@ -42,13 +43,14 @@
                                 <tr>
                                     <td class="text-center fs-6">{{ $skill->skill_name }}</td>
                                     <td class="text-center fs-6">{{ $skill->skill_percent}}</td>
+                                    <td class="text-center fs-6"><a href="{{ route('skills.edit', $skill->skill_id) }}" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a></td>
                                     <td class="text-center fs-6">
                                         <form id="delete-form-{{ $skill->skill_id }}" method="post" action="{{ route('skills.destroy', $skill->skill_id) }}">
                                             @csrf
                                             @method('DELETE')
-                                            <a href="{{ route('skills.edit', $skill->skill_id) }}" class="btn btn-warning">Edit</a>
+                                            
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete-{{ $skill->skill_id }}">
-                                                Delete
+                                                <i class="bi bi-trash3"></i>
                                             </button>
                                             <!-- Modal -->
                                             <div class="modal fade" id="confirmDelete-{{ $skill->skill_id }}" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
