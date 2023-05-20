@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Skill extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-    
+    protected $primaryKey = 'skill_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('skill_percent');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

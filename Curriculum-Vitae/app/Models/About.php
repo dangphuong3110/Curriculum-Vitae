@@ -8,10 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class About extends Model
 {
     use HasFactory;
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
+    
+    protected $primaryKey = 'about_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
 }

@@ -19,16 +19,19 @@ body {
     cursor: pointer;
 }
 
-.option h5 {
+.option h5,
+.col-md-4 h5 {
     margin: 0;
     color: black;
 }
 
-.option .change-password:hover {
+.option .change-information:hover,
+.change-name:hover {
     background-color: #0d6efd;
 }
 
-.option .change-about:hover {
+.option .change-about:hover,
+.change-password:hover {
     background-color: #6c757d;
 }
 
@@ -48,7 +51,9 @@ body {
     background-color: #0dcaf0;
 }
 
-.option .col-md-3:hover h5 {
+.option .col-md-3:hover h5,
+.col-md-4.change-name:hover h5,
+.col-md-4.change-password:hover h5 {
     color: #fff;
 }
 
@@ -57,3 +62,28 @@ body {
     background-color: #edecec;
     margin-top: auto;
 }
+
+.image-preview {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+}
+
+.skill-pagination .page-item.active .page-link {
+    background-color: #378c3f !important;
+    color: #fff !important;
+    border: 1px solid black;
+}
+
+.skill-pagination .page-item .page-link {
+    background-color: #fff !important;
+    color: black !important;
+    border: 1px solid black;
+}
+
+.skill-pagination .page-item .page-link:focus,
+.skill-pagination .page-item .page-link:hover {
+    box-shadow: none;
+    /* outline: none; */
+}
+

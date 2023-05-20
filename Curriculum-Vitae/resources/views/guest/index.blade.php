@@ -9,7 +9,7 @@
                 <div class="container" data-aos="zoom-in">
                     <div class="content-center">
                         <div class="profile-image">
-                            <a href="#"><img src="{{ asset('images/users_img/' . $about->image) }}" alt="profile image" onerror="this.src='{{ asset('images/users_img/blank-user-img.jpg') }}'"></a>
+                            <a href="#"><img src="{{ asset('images/users_img/' . $about->image) }}" alt="profile image" onerror="this.src=`{{ asset('images/users_img/blank-user-img.jpg') }}`"></a>
                         </div>
                         <h2>{{ $user->name }}</h2>
                         <p class="category">{{ $about->profession }}</p>
@@ -91,7 +91,7 @@
                             <div class="progress-container">
                                 <span class="progress-badge">{{ $skill->skill_name }}</span>
                                 <div class="progress">
-                                    <div class="progress-bar" data-aos="zoom-in-right" data-aos-duration="1500" data-aos-easing="ease-in-out" style="width: {{ $skill->skill_percent }}%;"></div>
+                                    <div class="progress-bar" data-aos="zoom-in-right" data-aos-duration="1500" data-aos-easing="ease-in-out" style="width: {{ $skill->skill_percent }}%"></div>
                                     <span class="progress-value">{{ $skill->skill_percent }}%</span>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                             <div class="portfolio-image" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
                                 <a href="{{ $portfolio->project_link }}">
                                 <figure class="effect">
-                                    <img src="{{ asset('images/projects_img/' . $portfolio->image) }}" class="img-fluid" alt="Image" onerror="this.src='{{ asset('images/projects_img/blank-project-img.jpg') }}'">
+                                    <img src="{{ asset('images/projects_img/' . $portfolio->image) }}" class="img-fluid" alt="Image" onerror="this.src=`{{ asset('images/projects_img/blank-project-img.jpg') }}`">
                                     <figcaption>
                                         <div class="content">
                                             <h4>{{ $portfolio->project_name }}</h4>
