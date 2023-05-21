@@ -91,3 +91,12 @@ body {
     height: 130px;
 }
 
+.image-project-preview {
+    width: 130px;
+    height: 100px;
+}
+
+.required {
+    color: red;
+}
+

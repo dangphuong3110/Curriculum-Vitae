@@ -28,14 +28,17 @@
                         </div>
 
                 @endif
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-bordered table-hover">
-                        <tr>
-                            <th class="text-center fs-6">Skill Name</th>
-                            <th class="text-center fs-6">Skill Level (%)</th>
-                            <th class="text-center fs-6">Edit</th>
-                            <th class="text-center fs-6">Delete</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th class="text-center align-middle fs-6">Skill Name</th>
+                                <th class="text-center align-middle fs-6">Skill Level (%)</th>
+                                <th class="text-center align-middle fs-6">Edit</th>
+                                <th class="text-center align-middle fs-6">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         @if(count($skills) > 0)
 
                             @foreach($skills as $skill)
@@ -78,9 +81,10 @@
 
                         @else
                             <tr>
-                                <td colspan="3" class="text-center">No Data Found</td>
+                                <td colspan="4" class="text-center">No Data Found</td>
                             </tr>
                         @endif
+                        </tbody>
                     </table>
                     <div class="fw-bold skill-pagination">
                         {!! $skills->render('pagination::bootstrap-5') !!}

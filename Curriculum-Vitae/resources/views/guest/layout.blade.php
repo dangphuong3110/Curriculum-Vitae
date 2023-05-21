@@ -32,10 +32,10 @@
                                 <a class="nav-link" href="#skills" data-aos="flip-left">Skills</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#portfolio" data-aos="flip-left">Portfolio</a>
+                                <a class="nav-link" href="#portfolio" data-aos="flip-left">Portfolios</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#experience" data-aos="flip-left">Experience</a>
+                                <a class="nav-link" href="#experience" data-aos="flip-left">Experiences</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#contact" data-aos="flip-left">Contact</a>

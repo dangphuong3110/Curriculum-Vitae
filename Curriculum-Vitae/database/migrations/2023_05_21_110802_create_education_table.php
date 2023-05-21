@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('work_experiences', function (Blueprint $table) {
-            $table->id('work_experiences_id');
-            $table->text('company');
-            $table->text('job_position');
+        Schema::create('education', function (Blueprint $table) {
+            $table->id('education_id');
+            $table->text('major');
+            $table->text('degree');
+            $table->text('school');
             $table->text('description');
             $table->text('start_date');
             $table->text('end_date');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('work_experiences');
+        Schema::dropIfExists('education');
     }
 };

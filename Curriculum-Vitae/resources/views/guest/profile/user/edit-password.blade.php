@@ -26,19 +26,19 @@
                         @csrf
                         @method('PUT')
                         <div class="row mb-3 mt-4">
-                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Current Password</label>
+                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Current Password<span class="required">*</span></label>
                             <div class="col-md-8">
                                 <input type="password" name="current-password" class="form-control fs-6" required/>
                             </div>
                         </div>
                         <div class="row mb-3 mt-4">
-                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">New Password</label>
+                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">New Password<span class="required">*</span></label>
                             <div class="col-md-8">
                                 <input type="password" name="new-password" class="form-control fs-6" required/>
                             </div>
                         </div>
                         <div class="row mb-3 mt-4">
-                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Confirm Password</label>
+                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Confirm Password<span class="required">*</span></label>
                             <div class="col-md-8">
                                 <input type="password" name="confirm-password" class="form-control fs-6" required/>
                             </div>

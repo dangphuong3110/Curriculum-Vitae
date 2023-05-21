@@ -24,10 +24,10 @@ class HomeController extends Controller
             $about = About::where('user_id', '=', $user_id)->get()->first();
             $skills = Skill::where('user_id', '=', $user_id)->get();
             $portfolios = Portfolio::where('user_id', '=', $user_id)->get();
-            $workexperiences = WorkExperience::where('user_id', '=', $user_id)->get();
-            $educations = Education::where('user_id', '=', $user_id)->get();
+            $workExperiences = WorkExperience::where('user_id', '=', $user_id)->get();
+            $courses = Education::where('user_id', '=', $user_id)->get();
     
-            return view('guest/index', compact('user', 'about', 'skills', 'portfolios', 'workexperiences', 'educations'));
+            return view('guest/index', compact('user', 'about', 'skills', 'portfolios', 'workExperiences', 'courses'));
         }
         else{
             return view('error/error');

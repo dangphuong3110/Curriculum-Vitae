@@ -11,10 +11,10 @@
                         <div class="col-md-6"><b class="fs-5">Portfolios</b></div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="col-md-8 d-flex justify-content-end">
+                                <div class="col-md-9 d-flex justify-content-end">
                                     <a href="{{ route('portfolios.create') }}" class="btn btn-success fs-6">Add Project</a>
                                 </div>
-                                <div class="col-md-4 d-flex justify-content-end">
+                                <div class="col-md-3 d-flex justify-content-end">
                                     <a href="{{ route('guest') }}" class="btn btn-danger fs-6">Go Back</a>
                                 </div>  
                             </div>
@@ -28,16 +28,19 @@
                         </div>
 
                 @endif
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-bordered table-hover">
-                        <tr>
-                            <th class="text-center fs-6">Project Name</th>
-                            <th class="text-center fs-6">Project Link</th>
-                            <th class="text-center fs-6">Project Description</th>
-                            <th class="text-center fs-6">Project Image</th>
-                            <th class="text-center fs-6">Edit</th>
-                            <th class="text-center fs-6">Delete</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th class="text-center align-middle fs-6">Project Name</th>
+                                <th class="text-center align-middle fs-6">Project Link</th>
+                                <th class="text-center align-middle fs-6">Project Description</th>
+                                <th class="text-center align-middle fs-6">Project Image</th>
+                                <th class="text-center align-middle fs-6">Edit</th>
+                                <th class="text-center align-middle fs-6">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         @if(count($portfolios) > 0)
 
                             @foreach($portfolios as $portfolio)
@@ -46,7 +49,7 @@
                                     <td class="text-center fs-6">{{ $portfolio->project_name }}</td>
                                     <td class="text-center fs-6">{{ $portfolio->project_link}}</td>
                                     <td class="text-center fs-6">{{ $portfolio->project_desc}}</td>
-                                    <td class="text-center fs-6"><img src="{{ asset('images/projects_img/' . $portfolio->image) }}" alt="Project Image" class="project-image"></td>
+                                    <td class="text-center fs-6"><img src="{{ asset('images/projects_img/' . $portfolio->image) }}" alt="Project Image" class="image-project-preview"></td>
                                     <td class="text-center fs-6"><a href="{{ route('portfolios.edit', $portfolio->portfolio_id) }}" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a></td>
                                     <td class="text-center fs-6">
                                         <form id="delete-form-{{ $portfolio->portfolio_id }}" method="post" action="{{ route('portfolios.destroy', $portfolio->portfolio_id) }}">
@@ -60,7 +63,7 @@
                                                 <div class="modal-dialog modal-dialog-centered text-center">
                                                     <div class="modal-content">
                                                     <div class="modal-header" style="background-color: #378c3f; color: #fff">
-                                                        <h5 class="modal-title" id="confirmDeleteLabel">Delete Skill</h5>
+                                                        <h5 class="modal-title" id="confirmDeleteLabel">Delete Project</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body fs-5">
@@ -81,9 +84,10 @@
 
                         @else
                             <tr>
-                                <td colspan="3" class="text-center">No Data Found</td>
+                                <td colspan="6" class="text-center">No Data Found</td>
                             </tr>
                         @endif
+                        </tbody>
                     </table>
                     <div class="fw-bold skill-pagination">
                         {!! $portfolios->render('pagination::bootstrap-5') !!}

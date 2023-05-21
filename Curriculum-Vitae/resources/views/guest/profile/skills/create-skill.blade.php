@@ -8,13 +8,6 @@
             <div class="card p-0">
                 <div class="card-header"><b class="fs-5">Add Skill</b></div>
                 <div class="card-body">
-                    @if($message = Session::get('success'))
-
-                        <div class="alert alert-success">
-                            {{ $message }}
-                        </div>
-
-                    @endif
                     @if($message = Session::get('failure'))
 
                         <div class="alert alert-danger">
@@ -25,13 +18,13 @@
                     <form method="post" action="{{ route('skills.store') }}">
                         @csrf
                         <div class="row mb-3 mt-4">
-                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Skill Name</label>
+                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Skill Name<span class="required">*</span></label>
                             <div class="col-md-8">
                                 <input type="text" name="skill-name" class="form-control fs-6" required/>
                             </div>
                         </div>
                         <div class="row mb-3 mt-4">
-                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Skill Level (%)</label>
+                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Skill Level (%)<span class="required">*</span></label>
                             <div class="col-md-8">
                                 <input type="text" name="skill-percent" class="form-control fs-6" required/>
                             </div>

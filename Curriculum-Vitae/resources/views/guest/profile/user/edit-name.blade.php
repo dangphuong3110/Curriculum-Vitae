@@ -19,7 +19,7 @@
                         @csrf
                         @method('PUT')
                         <div class="row mb-3 mt-4">
-                            <label class="col-md-2 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Name</label>
+                            <label class="col-md-2 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Name<span class="required">*</span></label>
                             <div class="col-md-10">
                                 <input type="text" name="name" class="form-control fs-6" value="{{ $user->name }}" required/>
                             </div>

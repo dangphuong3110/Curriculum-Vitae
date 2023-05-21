@@ -34,12 +34,11 @@ class PortfolioController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $project = new Portfolio();
-        $project->project_name = $request->input('project-name');
-        $project->project_link = $request->input('project-link');
-        $project->project_desc = $request->input('project-desc');
-        $project->image = $request->input('image');
-        $project->user_id = $user->id;
+        $portfolio = new Portfolio();
+        $portfolio->project_name = $request->input('project-name');
+        $portfolio->project_link = $request->input('project-link');
+        $portfolio->project_desc = $request->input('project-desc');
+        $portfolio->user_id = $user->id;
 
         $image = $request->file('image');
 
@@ -52,14 +51,14 @@ class PortfolioController extends Controller
             if(in_array($extension, $allowedExtensions)) {
                 $imageName = 'project' . ($count_project + 1) . '-' . $user->id . '.jpg';
                 $image->move(public_path('images/projects_img'), $imageName);
-                $project->image = $imageName;
+                $portfolio->image = $imageName;
             }
             else {
                 return redirect()->route('portfolios.create')->with('failure', 'The uploaded file must be in the correct image format (jpg, jpeg, png, gif).');
             }   
         }
 
-        $project->save();
+        $portfolio->save();
 
         return redirect()->route('portfolios.index')->with('success', 'Project has been added successfully.');
     }
@@ -77,7 +76,10 @@ class PortfolioController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = Auth::user();
+        $portfolio = Portfolio::findOrFail($id);
+
+        return view('guest/profile/portfolios/edit-project', compact('user', 'portfolio'));
     }
 
     /**
@@ -85,7 +87,37 @@ class PortfolioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = Auth::user();
+        $portfolio = Portfolio::findOrFail($id);
+        $portfolio->project_name = $request->input('project-name');
+        $portfolio->project_link = $request->input('project-link');
+        $portfolio->project_desc = $request->input('project-desc');
+        
+        $image = $request->file('image');
+
+        if($image) {
+            $extension = $image->getClientOriginalExtension();
+
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if(in_array($extension, $allowedExtensions)) {
+                if($portfolio->image) {
+                    $oldImagePath = public_path('images/projects_img/' . $portfolio->image);
+                    if(file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+                }
+                $imageName = 'project' . $id . '-' . $user->id . '.jpg';
+                $image->move(public_path('images/projects_img'), $imageName);
+                $portfolio->image = $imageName;
+            }
+            else {
+                return redirect()->route('portfolios.edit', $id)->with('failure', 'The uploaded file must be in the correct image format (jpg, jpeg, png, gif).');
+            }   
+        }
+
+        $portfolio->save();
+
+        return redirect()->route('portfolios.edit', $id)->with('success', 'Project has been updated successfully.');
     }
 
     /**
@@ -93,6 +125,9 @@ class PortfolioController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $portfolio = Portfolio::findOrFail($id);
+        $portfolio->delete();
+
+        return redirect()->route('portfolios.index')->with('success', 'Project deleted successfully.');
     }
 }

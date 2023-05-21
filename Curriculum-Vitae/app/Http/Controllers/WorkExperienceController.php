@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\WorkExperience;
 
 class WorkExperienceController extends Controller
 {
@@ -13,7 +14,8 @@ class WorkExperienceController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('guest/profile/work-experience/index', compact('user'));
+        $workExperiences = WorkExperience::where('user_id', $user->id)->latest()->paginate(2);
+        return view('guest/profile/work-experiences/index', compact('user', 'workExperiences'));
     }
 
     /**
@@ -21,7 +23,9 @@ class WorkExperienceController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+
+        return view('guest/profile/work-experiences/create-work-experience', compact('user'));
     }
 
     /**
@@ -29,7 +33,19 @@ class WorkExperienceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $workExperience = new WorkExperience();
+
+        $workExperience->company = $request->input('company');
+        $workExperience->job_position = $request->input('job-position');
+        $workExperience->description = $request->input('description');
+        $workExperience->start_date = $request->input('start-date');
+        $workExperience->end_date = $request->input('end-date');
+        $workExperience->user_id = $user->id;
+
+        $workExperience->save();
+
+        return redirect()->route('work-experiences.index')->with('success', 'Work Experience has been added successfully.');
     }
 
     /**
@@ -45,7 +61,10 @@ class WorkExperienceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = Auth::user();
+        $workExperience = WorkExperience::findOrFail($id);
+
+        return view('guest/profile/work-experiences/edit-work-experience', compact('user', 'workExperience'));
     }
 
     /**
@@ -53,7 +72,18 @@ class WorkExperienceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $workExperience = WorkExperience::findOrFail($id);
+
+        $workExperience->company = $request->input('company');
+        $workExperience->job_position = $request->input('job-position');
+        $workExperience->description = $request->input('description');
+        $workExperience->start_date = $request->input('start-date');
+        $workExperience->end_date = $request->input('end-date');
+
+        $workExperience->save();
+
+        return redirect()->route('work-experiences.edit', $id)->with('success', 'Work Experience has been updated successfully.');
     }
 
     /**
@@ -61,6 +91,9 @@ class WorkExperienceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $workExperience = WorkExperience::findOrFail($id);
+        $workExperience->delete();
+
+        return redirect()->route('work-experiences.index')->with('success', 'Work Experience deleted successfully.');
     }
 }

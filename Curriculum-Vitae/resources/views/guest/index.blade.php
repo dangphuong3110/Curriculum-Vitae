@@ -102,7 +102,7 @@
             </div>
             @else
                 <div class="card d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-offset="30" data-aos-anchor-placement="top-bottom">
-                    <h4>No skills</h4>  
+                    <h4>No Skill Found</h4>  
                 </div> 
             @endif
         </div>
@@ -114,7 +114,7 @@
             <div class="row">
                 <div class="col-md-6 ml-auto mr-auto">
                     <div class="text-center">
-                        <h4 class="mb-4 title">Portfolio</h4>
+                        <h4 class="mb-4 title">Portfolios</h4>
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                 </div>
             @else
                 <div class="card d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-offset="30" data-aos-anchor-placement="top-bottom">
-                    <h4>No projects</h4>  
+                    <h4>No Project Found</h4>  
                 </div> 
             @endif
         </div>
@@ -150,22 +150,22 @@
     <section id="experience">
         <div class="container work-experience">
             <div class="text-center mb-4">
-                <h4 class="title">Work Experience</h4>
+                <h4 class="title">Work Experiences</h4>
             </div>
-            @if(count($workexperiences) > 0)
-                @foreach($workexperiences as $workexperience)
+            @if(count($workExperiences) > 0)
+                @foreach($workExperiences as $workExperience)
                 <div class="card">
                     <div class="row">
                         <div class="col-md-3 bg-success" data-aos="fade-right" data-aos-offset="100" data-aos-duration="500">
                             <div class="card-body work-experience-header">
-                                <p>{{ $workexperience->start_date }} - {{ $workexperience->end_date }}</p>
-                                <h5>{{ $workexperience->company }}</h5>
+                                <p>{{ $workExperience->start_date }} - {{ $workExperience->end_date }}</p>
+                                <h5>{{ $workExperience->company }}</h5>
                             </div>
                         </div>
                         <div class="col-md-9" data-aos="fade-left" data-aos-offset="100" data-aos-duration="500">
                             <div class="card-body">
-                                <h5>{{ $workexperience->job_position }}</h5>
-                                <p>{{ $workexperience->description }}</p>
+                                <h5>{{ $workExperience->job_position }}</h5>
+                                <p>{{ $workExperience->description }}</p>
                             </div>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                 @endforeach
             @else
                 <div class="card d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-offset="30" data-aos-anchor-placement="top-bottom">
-                    <h4>No work experiences</h4>  
+                    <h4>No Work Experience Found</h4>  
                 </div> 
             @endif
         </div>
@@ -183,21 +183,21 @@
             <div class="text-center mb-4">
                 <h4 class="title">Education</h4>
             </div>
-            @if(count($educations) > 0)
-                @foreach($educations as $education)
+            @if(count($courses) > 0)
+                @foreach($courses as $course)
                 <div class="card">
                     <div class="row">
                         <div class="col-md-3 bg-success" data-aos="fade-right" data-aos-offset="100" data-aos-duration="500">
                             <div class="card-body education-header">
-                                <p>{{ $education->start_date }} - {{ $education->end_date }}</p>
-                                <h5>{{ $education->degree }}</h5>
+                                <p>{{ $course->start_date }} - {{ $course->end_date }}</p>
+                                <h5>{{ $course->degree }}</h5>
                             </div>
                         </div>
                         <div class="col-md-9" data-aos="fade-left" data-aos-offset="100" data-aos-duration="500">
                             <div class="card-body">
-                                <h5>{{ $education->major }}</h5>
-                                <p class="category">{{ $education->school }}</p>
-                                <p>{{ $education->description }}</p>
+                                <h5>{{ $course->major }}</h5>
+                                <p class="category">{{ $course->school }}</p>
+                                <p>{{ $course->description }}</p>
                             </div>
                         </div>
                     </div>
@@ -205,7 +205,7 @@
                 @endforeach
             @else
                 <div class="card d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-offset="30" data-aos-anchor-placement="top-bottom">
-                    <h4>No educations</h4>  
+                    <h4>No Course Found</h4>  
                 </div> 
             @endif
         </div>

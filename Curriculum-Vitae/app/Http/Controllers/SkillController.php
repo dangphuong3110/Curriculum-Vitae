@@ -85,16 +85,14 @@ class SkillController extends Controller
             return redirect()->route('skills.edit', $id)->with('failure', 'Skill Level must be an integer.');
         }
 
-        $user = Auth::user();
         $skill = Skill::findOrFail($id);
 
         $skill->skill_name = $request->input('skill-name');
         $skill->skill_percent = $request->input('skill-percent');
-        $skill->user_id = $user->id;
 
         $skill->save();
 
-        return redirect()->route('skills.index')->with('success', 'Skill has been updated successfully.');
+        return redirect()->route('skills.edit', $id)->with('success', 'Skill has been updated successfully.');
     }
 
     /**

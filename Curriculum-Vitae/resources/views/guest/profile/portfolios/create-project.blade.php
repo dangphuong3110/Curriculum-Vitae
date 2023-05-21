@@ -8,13 +8,6 @@
             <div class="card p-0">
                 <div class="card-header"><b class="fs-5">Add Project</b></div>
                 <div class="card-body">
-                    @if($message = Session::get('success'))
-
-                        <div class="alert alert-success">
-                            {{ $message }}
-                        </div>
-
-                    @endif
                     @if($message = Session::get('failure'))
 
                         <div class="alert alert-danger">
@@ -25,13 +18,13 @@
                     <form method="post" action="{{ route('portfolios.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3 mt-4">
-                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Project Name</label>
+                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Project Name<span class="required">*</span></label>
                             <div class="col-md-8">
                                 <input type="text" name="project-name" class="form-control fs-6" required/>
                             </div>
                         </div>
                         <div class="row mb-3 mt-4">
-                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Project Link</label>
+                            <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Project Link<span class="required">*</span></label>
                             <div class="col-md-8">
                                 <input type="text" name="project-link" class="form-control fs-6" required/>
                             </div>
@@ -39,7 +32,7 @@
                         <div class="row mb-3 mt-4">
                             <label class="col-md-4 col-label-form fs-6 fw-bold d-flex align-items-center justify-content-center">Project Description</label>
                             <div class="col-md-8">
-                                <input type="text" name="project-desc" class="form-control fs-6"/>
+                                <textarea name="project-desc" id="project-desc" cols="1" rows="1" class="form-control fs-6"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3 mt-4">
