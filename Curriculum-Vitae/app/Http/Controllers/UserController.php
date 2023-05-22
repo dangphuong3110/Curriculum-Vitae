@@ -117,23 +117,53 @@ class UserController extends Controller
         // if ($validator->fails()) {
         //     return redirect()->route('register-form')->with('failure', 'Có lỗi');
         // }
+        $user = User::where('email', $request->input('email'))->get()->first();
 
-        if ($validator->fails()) {
+        if($user !== NULL && $user->verified == false){
+            $user->name = $request->input('name');
+            $user->password = Hash::make($request->input('password'));
+            $user->verification_code = mt_rand(100000, 999999);
+            $user->save();
+
+            // Gửi email xác nhận đến địa chỉ email người dùng
+            $this->sendVerificationEmail($user);
+        }
+
+        elseif ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // Tạo tài khoản người dùng mới
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'verification_code' => mt_rand(100000, 999999), // Tạo mã xác nhận ngẫu nhiên
-            'verified' => false, // Chưa xác thực
-        ]);
+        
+        else {
+            // Tạo tài khoản người dùng mới
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'verification_code' => mt_rand(100000, 999999), // Tạo mã xác nhận ngẫu nhiên
+                'verified' => false, // Chưa xác thực
+            ]);
+            // Gửi email xác nhận đến địa chỉ email người dùng
+            $this->sendVerificationEmail($user);
+        }
 
-        // Gửi email xác nhận đến địa chỉ email người dùng
-        $this->sendVerificationEmail($user);
-
+        // $user = User::firstOrCreate(
+        //     ['email' => $request->input('email')],
+        //     [
+        //         'name' => $request->input('name'),
+        //         'password' => Hash::make($request->input('password')),
+        //         'verification_code' => mt_rand(100000, 999999),
+        //         'verified' => false,
+        //     ]
+        // );
+        
+        // // Nếu tài khoản đã tồn tại và chưa xác thực, cập nhật thông tin và lưu
+        // if ($user->wasRecentlyCreated && !$user->verified) {
+        //     $user->name = $request->input('name');
+        //     $user->password = Hash::make($request->input('password'));
+        //     $user->verification_code = mt_rand(100000, 999999);
+        //     $user->save();
+        // }
         // Chuyển hướng đến trang xác nhận mã
         return redirect()->route('verify-code-form');
     }
