@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('major');
             $table->text('degree');
             $table->text('school');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->text('start_date');
             $table->text('end_date');
             $table->unsignedBigInteger('user_id');

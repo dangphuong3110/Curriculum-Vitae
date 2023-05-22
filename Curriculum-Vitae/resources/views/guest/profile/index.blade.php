@@ -9,7 +9,7 @@
             </a>
         </div>
         <div class="col-md-3 mb-4 change-about border border-secondary border-5 rounded rounded-3 d-flex align-items-center justify-content-center">
-            <a href="{{ route('about.edit', $user->id) }}" class="text-center p-4 m-4">
+            <a href="{{ route('about.index') }}" class="text-center p-4 m-4">
                 <h5 class="fw-bold">About</h5>
             </a>
         </div>

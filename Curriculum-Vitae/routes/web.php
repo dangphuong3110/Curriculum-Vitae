@@ -53,8 +53,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-
 Route::post('/login', [LoginController::class, 'login'])->middleware('guest')->name('login');
+
+Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register-form');
+Route::post('/register', [UserController::class, 'register'])->name('register');
+
+Route::get('/verify', [UserController::class, 'verifyCodeForm'])->name('verify-code-form');
+Route::post('/verify', [UserController::class, 'verifyCode'])->name('verify-code');
 
 
 

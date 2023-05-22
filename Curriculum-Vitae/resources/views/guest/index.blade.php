@@ -9,10 +9,10 @@
                 <div class="container" data-aos="zoom-in">
                     <div class="content-center">
                         <div class="profile-image">
-                            <a href="#"><img src="{{ asset('images/users_img/' . $about->image) }}" alt="profile image" onerror="this.src=`{{ asset('images/users_img/blank-user-img.jpg') }}`"></a>
+                            <a href="#"><img src="{{ $about == NULL ? '' : asset('images/users_img/' . $about->image) }}" alt="profile image" onerror="this.src=`{{ asset('images/users_img/blank-user-img.jpg') }}`"></a>
                         </div>
                         <h2>{{ $user->name }}</h2>
-                        <p class="category">{{ $about->profession }}</p>
+                        <p class="category">{{ $about == NULL ? '' : $about->profession }}</p>
                         <a class="btn btn-success mr-2" href="#contact" data-aos="zoom-in">Hire Me</a>
                         <a class="btn btn-success" href="{{ route('guest') }}" data-aos="zoom-in" title="Create your CV?">Create CV</a>
                     </div>
@@ -22,13 +22,13 @@
         <div class="section">
             <div class="container">
                 <div class="button-container" data-aos="zoom-in">
-                    <a class="btn-default btn-lg btn-icon btn-fb" href="{{ $about->fb_link }}" title="Follow me on Facebook"><i
+                    <a class="btn-default btn-lg btn-icon btn-fb" href="{{ $about == NULL ? '' : $about->fb_link }}" title="Follow me on Facebook"><i
                         class="fa-brands fa-facebook-f"></i></a>
-                    <a class="btn-default btn-lg btn-icon btn-twitter" href="{{ $about->twitter_link }}" title="Follow me on Twitter"><i
+                    <a class="btn-default btn-lg btn-icon btn-twitter" href="{{ $about == NULL ? '' : $about->twitter_link }}" title="Follow me on Twitter"><i
                         class="fa-brands fa-twitter"></i></a>
-                    <a class="btn-default btn-lg btn-icon btn-google" href="{{ $about->google_link }}" title="Follow me on Google+"><i
+                    <a class="btn-default btn-lg btn-icon btn-google" href="{{ $about == NULL ? '' : $about->google_link }}" title="Follow me on Google+"><i
                         class="fa-brands fa-google-plus-g"></i></a>
-                    <a class="btn-default btn-lg btn-icon btn-ins" href="{{ $about->ins_link }}" title="Follow me on Instagram"><i
+                    <a class="btn-default btn-lg btn-icon btn-ins" href="{{ $about == NULL ? '' : $about->ins_link }}" title="Follow me on Instagram"><i
                         class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="col-lg-6 col-md-12">
                 <div class="card-body">
                     <h4 class="mt-0 title">About</h4>
-                    <p>{{ $about->content }}</p>
+                    <p>{{ $about == NULL ? '' : $about->content }}</p>
                 </div>
                 </div>
                 <div class="col-lg-6 col-md-12">
@@ -51,23 +51,23 @@
                     <h4 class="mt-0 title">Basic Information</h4>
                     <div class="row">
                     <div class="col-sm-4"><strong class="text-uppercase">Age:</strong></div>
-                    <div class="col-sm-8">{{ $about->age }}</div>
+                    <div class="col-sm-8">{{ $about == NULL ? '' : $about->age }}</div>
                     </div>
                     <div class="row mt-3">
                     <div class="col-sm-4"><strong class="text-uppercase">Email:</strong></div>
-                    <div class="col-sm-8">{{ $user->email }}</div>
+                    <div class="col-sm-8">{{ $about == NULL ? '' : $user->email }}</div>
                     </div>
                     <div class="row mt-3">
                     <div class="col-sm-4"><strong class="text-uppercase">Phone:</strong></div>
-                    <div class="col-sm-8">{{ $about->phone_number }}</div>
+                    <div class="col-sm-8">{{ $about == NULL ? '' : $about->phone_number }}</div>
                     </div>
                     <div class="row mt-3">
                     <div class="col-sm-4"><strong class="text-uppercase">Address:</strong></div>
-                    <div class="col-sm-8">{{ $about->address }}</div>
+                    <div class="col-sm-8">{{ $about == NULL ? '' : $about->address }}</div>
                     </div>
                     <div class="row mt-3">
                     <div class="col-sm-4"><strong class="text-uppercase">Language:</strong></div>
-                    <div class="col-sm-8">{{ $about->language }}</div>
+                    <div class="col-sm-8">{{ $about == NULL ? '' : $about->language }}</div>
                     </div>
                 </div>
                 </div>
@@ -269,9 +269,9 @@
                                     <div class="col-md-6">
                                         <div class="card-body">
                                             <p class="mb-0"><strong>Address</strong></p>
-                                            <p class="pb-2">{{ $about->address }}</p>
+                                            <p class="pb-2">{{ $about == NULL ? '' : $about->address }}</p>
                                             <p class="mb-0"><strong>Phone</strong></p>
-                                            <p class="pb-2">{{ $about->phone_number }}</p>
+                                            <p class="pb-2">{{ $about == NULL ? '' : $about->phone_number }}</p>
                                             <p class="mb-0"><strong>Email</strong></p>
                                             <p>{{ $user->email }}</p>
                                         </div>

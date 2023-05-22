@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerificationEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -96,4 +99,80 @@ class UserController extends Controller
     {
         //
     }
+
+    public function showRegistrationForm() {
+        return view('login/register');
+    }
+
+    public function register(Request $request)
+    {
+        // Kiểm tra dữ liệu nhập vào từ form
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        // Nếu dữ liệu không hợp lệ, chuyển hướng với thông báo lỗi
+        // if ($validator->fails()) {
+        //     return redirect()->route('register-form')->with('failure', 'Có lỗi');
+        // }
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Tạo tài khoản người dùng mới
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+            'verification_code' => mt_rand(100000, 999999), // Tạo mã xác nhận ngẫu nhiên
+            'verified' => false, // Chưa xác thực
+        ]);
+
+        // Gửi email xác nhận đến địa chỉ email người dùng
+        $this->sendVerificationEmail($user);
+
+        // Chuyển hướng đến trang xác nhận mã
+        return redirect()->route('verify-code-form');
+    }
+
+    // Gửi email xác nhận
+    public function sendVerificationEmail($user)
+    {
+        $data = [
+            'name' => $user->name,
+            'verification_code' => $user->verification_code,
+        ];
+
+        // Mail::send('login/verify-code', $data, function ($message) use ($user) {
+        //     $message->to($user->email, $user->name)->subject('Xác nhận địa chỉ email');
+        // });
+        Mail::to($user->email)->send(new VerificationEmail($data));
+    }
+
+    public function verifyCodeForm() {
+        return view('login/verify');
+    }
+
+    // Xử lý xác thực mã
+    public function verifyCode(Request $request)
+    {
+        // Kiểm tra mã xác nhận
+        $user = User::where('verification_code', $request->input('verification-code'))->get()->first();
+
+        if ($user !== NULL) {
+            // Xác thực tài khoản
+            $user->verified = true;
+            $user->save();
+
+            // Chuyển hướng đến trang nào đó sau khi xác thực thành công
+            return redirect()->route('login')->with('success', 'Registration successful.');
+        }
+
+        // Nếu mã xác nhận không đúng, chuyển hướng với thông báo lỗi
+        return redirect()->route('verify-code-form')->with('failure', 'Invalid verification code. Please check your email.');
+    }
+ 
 }

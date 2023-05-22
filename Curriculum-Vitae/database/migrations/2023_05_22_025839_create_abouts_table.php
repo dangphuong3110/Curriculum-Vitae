@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id('about_id');
-            $table->text('content');
-            $table->string('phone_number');
-            $table->text('address');
-            $table->unsignedBigInteger('age');
-            $table->text('image');
-            $table->text('fb_link');
-            $table->text('twitter_link');
-            $table->text('google_link');
-            $table->text('ins_link');
-            $table->text('profession');
-            $table->text('language');
+            $table->text('content')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->text('address')->nullable();
+            $table->unsignedBigInteger('age')->nullable();
+            $table->text('image')->nullable();
+            $table->text('fb_link')->nullable();
+            $table->text('twitter_link')->nullable();
+            $table->text('google_link')->nullable();
+            $table->text('ins_link')->nullable();
+            $table->text('profession')->nullable();
+            $table->text('language')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
