@@ -115,7 +115,7 @@ class UserController extends Controller
 
         $user = User::where('email', $request->input('email'))->get()->first();
 
-        if($user !== NULL && $user->verified == false){
+        if($user && !$user->verified){
             $user->name = $request->input('name');
             $user->password = Hash::make($request->input('password'));
             $user->verification_code = mt_rand(100000, 999999);
@@ -162,7 +162,7 @@ class UserController extends Controller
     {
         $user = User::where('verification_code', $request->input('verification-code'))->where('verified', false)->get()->first();
 
-        if ($user !== NULL) {
+        if ($user) {
             $user->verified = true;
             $user->save();
 
@@ -195,7 +195,6 @@ class UserController extends Controller
 
             $this->sendResetCodeEmail($user);
 
-            // return redirect()->route('reset-password-form')->with('email', $user->email);
             session(['email' => $user->email]);
             return redirect()->route('reset-password-form');
         }
@@ -222,7 +221,6 @@ class UserController extends Controller
         }
 
         return view('login/forgot-password/reset-password', compact('email'));
-        // return view('login/forgot-password/reset-password');
     }
 
     public function resetPassword(Request $request, $email)
