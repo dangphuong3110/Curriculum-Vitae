@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('verification_code')->nullable();
             $table->boolean('verified')->default(false);
+            $table->string('reset_password_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         }); 

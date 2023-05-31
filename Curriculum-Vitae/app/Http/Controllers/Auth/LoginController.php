@@ -15,8 +15,8 @@ class LoginController extends Controller
 
     public function login(Request $request){
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => ['required', 'email', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:6'],
         ]);
 
         $credentials['verified'] = true;
@@ -27,7 +27,7 @@ class LoginController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'email' => __('auth.failed'),
+            'email' => 'Incorrect email or password.',
         ]);
     }
 

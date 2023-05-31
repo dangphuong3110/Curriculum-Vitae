@@ -171,3 +171,7 @@ body {
 .login-register p a:hover {
     text-decoration: underline;
 }
+
+.required {
+    color: red;
+}

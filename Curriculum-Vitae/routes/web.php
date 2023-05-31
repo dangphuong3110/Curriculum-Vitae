@@ -61,6 +61,12 @@ Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/verify', [UserController::class, 'verifyCodeForm'])->name('verify-code-form');
 Route::post('/verify', [UserController::class, 'verifyCode'])->name('verify-code');
 
+Route::get('/forgot-password', [UserController::class, 'showForgotPasswordForm'])->name('forgot-password-form');
+Route::post('/forgot-password', [UserController::class, 'sendResetCode'])->name('send-reset-code');
+
+Route::get('/reset-password', [UserController::class, 'showResetPasswordForm'])->name('reset-password-form');
+Route::put('/reset-password/{email}', [UserController::class, 'resetPassword'])->name('reset-password');
+
 
 
 

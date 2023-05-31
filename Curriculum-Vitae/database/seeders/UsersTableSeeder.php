@@ -17,7 +17,10 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Nguyen Dang Phuong',
             'email' => 'nguyendangphuong@gmail.com',
-            'password'=> Hash::make('abc'),
+            'password'=> Hash::make('abcabc'),
+            'verified' => true,
+            'verification_code' => '311002',
+            'reset_password_code' => '311002',
         ]);
     }
 }

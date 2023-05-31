@@ -4,30 +4,19 @@
 <div class="wrapper active">
     <div class="form-box login">
         <h2>Login</h2>
-        <form action="{{ route('login') }}" method="POST">
+        <form action="{{ route('login') }}" method="POST" id="login">
             @csrf
             <div class="input-box">
                 <span class="icon"><ion-icon name="mail"></ion-icon></span>
                 <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus>
                 <label for="email">Email</label>
-                @error('email')
-                    <span role="alert" style="color: red; font-size: 12px;">
-                        <br>
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
             </div>
             <div class="input-box">
                 <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
                 <input type="password" name="password" id="password" required>
                 <label for="password">Password</label>
-                @error('password')
-                    <span role="alert" style="color: red; font-size: 12px;">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
             </div>
-            <div class="remember-forgot">
+            <div class="remember-forgot mt-1">
                 <label for="remember_me">
                     <input type="checkbox" name="remember" id="remember">
                     Remember me
@@ -43,7 +32,7 @@
 
     <div class="form-box register">
         <h2>Registration</h2>
-        <form action="{{ route('register') }}" method="POST">
+        <form action="{{ route('register') }}" method="POST" id="register">
             @csrf
             <div class="input-box">
                 <span class="icon"><ion-icon name="person"></ion-icon></span>
@@ -80,11 +69,11 @@
             </div>
             <div class="remember-forgot mt-1">
                 <label for="remember_me">
-                    <input type="checkbox" name="remember" id="remember">
+                    <input type="checkbox" name="remember" id="agree-checkbox">
                     I agree to the terms & conditions
                 </label>
             </div>
-            <button type="submit" class="btn">Register</button>
+            <button type="submit" class="btn" id="register-button" disabled>Register</button>
             <div class="login-register">
                 <p>Already have an account? <a href="{{ route('login') }}" class="login-link">Login</a></p>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetCodeEmail;
 use App\Mail\VerificationEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -106,17 +107,12 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        // Kiểm tra dữ liệu nhập vào từ form
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
-        // Nếu dữ liệu không hợp lệ, chuyển hướng với thông báo lỗi
-        // if ($validator->fails()) {
-        //     return redirect()->route('register-form')->with('failure', 'Có lỗi');
-        // }
         $user = User::where('email', $request->input('email'))->get()->first();
 
         if($user !== NULL && $user->verified == false){
@@ -125,7 +121,6 @@ class UserController extends Controller
             $user->verification_code = mt_rand(100000, 999999);
             $user->save();
 
-            // Gửi email xác nhận đến địa chỉ email người dùng
             $this->sendVerificationEmail($user);
         }
 
@@ -135,40 +130,20 @@ class UserController extends Controller
 
         
         else {
-            // Tạo tài khoản người dùng mới
             $user = User::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
-                'verification_code' => mt_rand(100000, 999999), // Tạo mã xác nhận ngẫu nhiên
-                'verified' => false, // Chưa xác thực
+                'verification_code' => mt_rand(100000, 999999),
+                'verified' => false,
             ]);
-            // Gửi email xác nhận đến địa chỉ email người dùng
+
             $this->sendVerificationEmail($user);
         }
 
-        // $user = User::firstOrCreate(
-        //     ['email' => $request->input('email')],
-        //     [
-        //         'name' => $request->input('name'),
-        //         'password' => Hash::make($request->input('password')),
-        //         'verification_code' => mt_rand(100000, 999999),
-        //         'verified' => false,
-        //     ]
-        // );
-        
-        // // Nếu tài khoản đã tồn tại và chưa xác thực, cập nhật thông tin và lưu
-        // if ($user->wasRecentlyCreated && !$user->verified) {
-        //     $user->name = $request->input('name');
-        //     $user->password = Hash::make($request->input('password'));
-        //     $user->verification_code = mt_rand(100000, 999999);
-        //     $user->save();
-        // }
-        // Chuyển hướng đến trang xác nhận mã
         return redirect()->route('verify-code-form');
     }
 
-    // Gửi email xác nhận
     public function sendVerificationEmail($user)
     {
         $data = [
@@ -176,9 +151,6 @@ class UserController extends Controller
             'verification_code' => $user->verification_code,
         ];
 
-        // Mail::send('login/verify-code', $data, function ($message) use ($user) {
-        //     $message->to($user->email, $user->name)->subject('Xác nhận địa chỉ email');
-        // });
         Mail::to($user->email)->send(new VerificationEmail($data));
     }
 
@@ -186,23 +158,95 @@ class UserController extends Controller
         return view('login/verify');
     }
 
-    // Xử lý xác thực mã
     public function verifyCode(Request $request)
     {
-        // Kiểm tra mã xác nhận
-        $user = User::where('verification_code', $request->input('verification-code'))->get()->first();
+        $user = User::where('verification_code', $request->input('verification-code'))->where('verified', false)->get()->first();
 
         if ($user !== NULL) {
-            // Xác thực tài khoản
             $user->verified = true;
             $user->save();
 
-            // Chuyển hướng đến trang nào đó sau khi xác thực thành công
             return redirect()->route('login')->with('success', 'Registration successful.');
         }
 
-        // Nếu mã xác nhận không đúng, chuyển hướng với thông báo lỗi
         return redirect()->route('verify-code-form')->with('failure', 'Invalid verification code. Please check your email.');
     }
+
+    public function showForgotPasswordForm() 
+    {
+        return view('login/forgot-password/send-email');
+    }
  
+    public function sendResetCode(Request $request) 
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:255',
+        ]);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::where('email', $request->input('email'))->get()->first();
+
+        if($user && $user->verified) {
+            $user->reset_password_code = mt_rand(100000, 999999);
+            $user->save();
+
+            $this->sendResetCodeEmail($user);
+
+            // return redirect()->route('reset-password-form')->with('email', $user->email);
+            session(['email' => $user->email]);
+            return redirect()->route('reset-password-form');
+        }
+
+        return redirect()->route('forgot-password-form')->with('failure', 'Email not found.');
+    }
+
+    public function sendResetCodeEmail($user) 
+    {
+        $data = [
+            'name' => $user->name,
+            'reset_password_code' => $user->reset_password_code,
+        ];
+
+        Mail::to($user->email)->send(new ResetCodeEmail($data));
+    }
+
+    public function showResetPasswordForm()
+    {
+        $email = session('email');
+
+        if (!$email) {
+            return redirect()->route('forgot-password-form')->with('failure', 'Invalid request.');
+        }
+
+        return view('login/forgot-password/reset-password', compact('email'));
+        // return view('login/forgot-password/reset-password');
+    }
+
+    public function resetPassword(Request $request, $email)
+    {
+        $validator = Validator::make($request->all(), [
+            'reset-password-code' => 'required|numeric',
+            'new-password' => 'required|string|min:6',
+            'confirm-password' => 'required|string|same:new-password',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = User::where('email', $email)->where('reset_password_code', $request->input('reset-password-code'))->get()->first();
+
+        if ($user) {
+            $user->password = Hash::make($request->input('new-password'));
+            $user->reset_password_code = NULL;
+            $user->save();
+
+            return redirect()->route('login')->with('success', 'Password reset successful.');
+        }
+
+        return redirect()->route('reset-password-form')->with('failure', 'Invalid reset password code. Please check your email.');
+    }
 }
