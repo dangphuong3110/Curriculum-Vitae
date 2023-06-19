@@ -21,8 +21,7 @@ class AboutController extends Controller
         if($about){
             return redirect()->route('about.edit', $about->about_id);
         }
-            
-        // return view('guest/profile/about/create-about', compact('user'));
+        
         return redirect()->route('about.create');
     }
 
@@ -33,7 +32,7 @@ class AboutController extends Controller
     {
         $user = Auth::user();
 
-        return view('guest/profile/about/create-about', compact('user'));
+        return view('guest.profile.about.create-about', compact('user'));
     }
 
     /**
@@ -98,7 +97,7 @@ class AboutController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('error.error');
     }
 
     /**
@@ -109,7 +108,7 @@ class AboutController extends Controller
         $user = Auth::user();
         $about = About::findOrFail($id);
 
-        return view('guest/profile/about/edit-about', compact('user', 'about'));
+        return view('guest.profile.about.edit-about', compact('user', 'about'));
     }
 
     /**
@@ -171,6 +170,6 @@ class AboutController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return view('error.error');
     }
 }

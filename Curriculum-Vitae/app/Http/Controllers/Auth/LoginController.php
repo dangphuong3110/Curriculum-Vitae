@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 class LoginController extends Controller
 {
     public function showLoginForm(){
-        return view('login/login');
+        return view('login.login');
     }
 
     public function login(Request $request){

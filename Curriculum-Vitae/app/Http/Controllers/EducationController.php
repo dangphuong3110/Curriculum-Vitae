@@ -15,7 +15,7 @@ class EducationController extends Controller
     {
         $user = Auth::user();
         $courses = Education::where('user_id', $user->id)->latest()->paginate(2);
-        return view('guest/profile/education/index', compact('user', 'courses'));
+        return view('guest.profile.education.index', compact('user', 'courses'));
     }
 
     /**
@@ -25,7 +25,7 @@ class EducationController extends Controller
     {
         $user = Auth::user();
 
-        return view('guest/profile/education/create-course', compact('user'));
+        return view('guest.profile.education.create-course', compact('user'));
     }
 
     /**
@@ -54,7 +54,7 @@ class EducationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('error.error');
     }
 
     /**
@@ -65,7 +65,7 @@ class EducationController extends Controller
         $user = Auth::user();
         $course = Education::findOrFail($id);
 
-        return view('guest/profile/education/edit-course', compact('user', 'course'));
+        return view('guest.profile.education.edit-course', compact('user', 'course'));
     }
 
     /**

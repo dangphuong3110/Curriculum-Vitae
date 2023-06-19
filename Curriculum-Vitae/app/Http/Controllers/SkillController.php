@@ -16,7 +16,7 @@ class SkillController extends Controller
     {
         $user = Auth::user();
         $skills = Skill::where('user_id', $user->id)->latest()->paginate(4);
-        return view('guest/profile/skills/index', compact('user', 'skills'));
+        return view('guest.profile.skills.index', compact('user', 'skills'));
     }
 
     /**
@@ -25,7 +25,7 @@ class SkillController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view('guest/profile/skills/create-skill', compact('user'));
+        return view('guest.profile.skills.create-skill', compact('user'));
     }
 
     /**
@@ -58,7 +58,7 @@ class SkillController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('error.error');
     }
 
     /**
@@ -69,7 +69,7 @@ class SkillController extends Controller
         $user = Auth::user();
         $skill = Skill::findOrFail($id);
 
-        return view('guest/profile/skills/edit-skill', compact('user', 'skill'));
+        return view('guest.profile.skills.edit-skill', compact('user', 'skill'));
     }
 
     /**

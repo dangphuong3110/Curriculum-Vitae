@@ -15,7 +15,7 @@ class WorkExperienceController extends Controller
     {
         $user = Auth::user();
         $workExperiences = WorkExperience::where('user_id', $user->id)->latest()->paginate(2);
-        return view('guest/profile/work-experiences/index', compact('user', 'workExperiences'));
+        return view('guest.profile.work-experiences.index', compact('user', 'workExperiences'));
     }
 
     /**
@@ -25,7 +25,7 @@ class WorkExperienceController extends Controller
     {
         $user = Auth::user();
 
-        return view('guest/profile/work-experiences/create-work-experience', compact('user'));
+        return view('guest.profile.work-experiences.create-work-experience', compact('user'));
     }
 
     /**
@@ -53,7 +53,7 @@ class WorkExperienceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('error.error');
     }
 
     /**
@@ -64,7 +64,7 @@ class WorkExperienceController extends Controller
         $user = Auth::user();
         $workExperience = WorkExperience::findOrFail($id);
 
-        return view('guest/profile/work-experiences/edit-work-experience', compact('user', 'workExperience'));
+        return view('guest.profile.work-experiences.edit-work-experience', compact('user', 'workExperience'));
     }
 
     /**

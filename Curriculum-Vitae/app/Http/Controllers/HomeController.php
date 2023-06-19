@@ -27,10 +27,10 @@ class HomeController extends Controller
             $workExperiences = WorkExperience::where('user_id', '=', $user_id)->get();
             $courses = Education::where('user_id', '=', $user_id)->get();
     
-            return view('guest/index', compact('user', 'about', 'skills', 'portfolios', 'workExperiences', 'courses'));
+            return view('guest.index', compact('user', 'about', 'skills', 'portfolios', 'workExperiences', 'courses'));
         }
         else{
-            return view('error/error');
+            return view('error.error');
         }
     }
 

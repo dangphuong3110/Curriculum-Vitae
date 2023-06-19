@@ -37,7 +37,7 @@ class ResetCodeEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'login/forgot-password/reset-code',
+            view: 'login.forgot-password.reset-code',
             with: ['data' => $this->data],
         );
     }

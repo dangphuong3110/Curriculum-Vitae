@@ -15,7 +15,7 @@ class PortfolioController extends Controller
     {
         $user = Auth::user();
         $portfolios = Portfolio::where('user_id', $user->id)->latest()->paginate(2);
-        return view('guest/profile/portfolios/index', compact('user', 'portfolios'));
+        return view('guest.profile.portfolios.index', compact('user', 'portfolios'));
     }
 
     /**
@@ -25,7 +25,7 @@ class PortfolioController extends Controller
     {
         $user = Auth::user();
 
-        return view('guest/profile/portfolios/create-project', compact('user'));
+        return view('guest.profile.portfolios.create-project', compact('user'));
     }
 
     /**
@@ -68,7 +68,7 @@ class PortfolioController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('error.error');
     }
 
     /**
@@ -79,7 +79,7 @@ class PortfolioController extends Controller
         $user = Auth::user();
         $portfolio = Portfolio::findOrFail($id);
 
-        return view('guest/profile/portfolios/edit-project', compact('user', 'portfolio'));
+        return view('guest.profile.portfolios.edit-project', compact('user', 'portfolio'));
     }
 
     /**

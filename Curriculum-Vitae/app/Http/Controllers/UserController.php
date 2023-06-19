@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('guest/profile/user/index', compact('user'));
+        return view('guest.profile.user.index', compact('user'));
     }
 
     /**
@@ -27,7 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('error.error');
     }
 
     /**
@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('error.error');
     }
 
     /**
@@ -43,7 +43,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('error.error');
     }
 
     /**
@@ -53,14 +53,14 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return view('guest/profile/user/edit-name', compact('user'));
+        return view('guest.profile.user.edit-name', compact('user'));
     }
 
     public function editPassword(string $id)
     {
         $user = User::findOrFail($id);
 
-        return view('guest/profile/user/edit-password', compact('user'));
+        return view('guest.profile.user.edit-password', compact('user'));
     }
 
     /**
@@ -98,11 +98,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return view('error.error');
     }
 
     public function showRegistrationForm() {
-        return view('login/register');
+        return view('login.register');
     }
 
     public function register(Request $request)
@@ -155,7 +155,7 @@ class UserController extends Controller
     }
 
     public function verifyCodeForm() {
-        return view('login/verify');
+        return view('login.verify');
     }
 
     public function verifyCode(Request $request)
@@ -174,7 +174,7 @@ class UserController extends Controller
 
     public function showForgotPasswordForm() 
     {
-        return view('login/forgot-password/send-email');
+        return view('login.forgot-password.send-email');
     }
  
     public function sendResetCode(Request $request) 
@@ -220,7 +220,7 @@ class UserController extends Controller
             return redirect()->route('forgot-password-form')->with('failure', 'Invalid request.');
         }
 
-        return view('login/forgot-password/reset-password', compact('email'));
+        return view('login.forgot-password.reset-password', compact('email'));
     }
 
     public function resetPassword(Request $request, $email)

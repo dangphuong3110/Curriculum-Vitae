@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return redirect('/guest');;
+    return redirect('/guest');
 });
 
 Route::get('/cv/{user_id}', function($user_id){
@@ -35,7 +35,7 @@ Route::get('/cv/{user_id}', function($user_id){
 Route::middleware(['auth'])->group(function () {
     Route::get('/guest', function () {
         $user = Auth::user();
-        return view('guest/profile/index', compact('user'));
+        return view('guest.profile.index', compact('user'));
     })->name('guest');
 
     Route::resource('/user', UserController::class);
@@ -46,9 +46,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/portfolios', PortfolioController::class);
     Route::resource('/work-experiences', WorkExperienceController::class);
     Route::resource('/education', EducationController::class);
-    Route::get('/logout' ,function () {
-        redirect('/login');
-    });
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
@@ -66,6 +63,11 @@ Route::post('/forgot-password', [UserController::class, 'sendResetCode'])->name(
 
 Route::get('/reset-password', [UserController::class, 'showResetPasswordForm'])->name('reset-password-form');
 Route::put('/reset-password/{email}', [UserController::class, 'resetPassword'])->name('reset-password');
+
+Route::get('/{any}', function () {
+    return view('error.error');
+})->where('any', '.*');
+
 
 
 
