@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendResetPasswordCode;
 use App\Jobs\SendVerificationMessage;
 use App\Mail\ResetCodeEmail;
 use App\Mail\VerificationEmail;
@@ -184,23 +185,13 @@ class UserController extends Controller
             $user->reset_password_code = mt_rand(100000, 999999);
             $user->save();
 
-            $this->sendResetCodeEmail($user);
+            SendResetPasswordCode::dispatch($user);
 
             session(['email' => $user->email]);
             return redirect()->route('reset-password-form');
         }
 
         return redirect()->route('forgot-password-form')->with('failure', 'Email not found.');
-    }
-
-    public function sendResetCodeEmail($user)
-    {
-        $data = [
-            'name' => $user->name,
-            'reset_password_code' => $user->reset_password_code,
-        ];
-
-        Mail::to($user->email)->send(new ResetCodeEmail($data));
     }
 
     public function showResetPasswordForm()
