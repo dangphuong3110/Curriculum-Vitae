@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendVerificationMessage;
 use App\Mail\ResetCodeEmail;
 use App\Mail\VerificationEmail;
 use Illuminate\Http\Request;
@@ -121,14 +122,14 @@ class UserController extends Controller
             $user->verification_code = mt_rand(100000, 999999);
             $user->save();
 
-            $this->sendVerificationEmail($user);
+            SendVerificationMessage::dispatch($user);
         }
 
         elseif ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        
+
         else {
             $user = User::create([
                 'name' => $request->input('name'),
@@ -138,20 +139,10 @@ class UserController extends Controller
                 'verified' => false,
             ]);
 
-            $this->sendVerificationEmail($user);
+            SendVerificationMessage::dispatch($user);
         }
 
         return redirect()->route('verify-code-form');
-    }
-
-    public function sendVerificationEmail($user)
-    {
-        $data = [
-            'name' => $user->name,
-            'verification_code' => $user->verification_code,
-        ];
-
-        Mail::to($user->email)->send(new VerificationEmail($data));
     }
 
     public function verifyCodeForm() {
@@ -172,12 +163,12 @@ class UserController extends Controller
         return redirect()->route('verify-code-form')->with('failure', 'Invalid verification code. Please check your email.');
     }
 
-    public function showForgotPasswordForm() 
+    public function showForgotPasswordForm()
     {
         return view('login.forgot-password.send-email');
     }
- 
-    public function sendResetCode(Request $request) 
+
+    public function sendResetCode(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255',
@@ -202,7 +193,7 @@ class UserController extends Controller
         return redirect()->route('forgot-password-form')->with('failure', 'Email not found.');
     }
 
-    public function sendResetCodeEmail($user) 
+    public function sendResetCodeEmail($user)
     {
         $data = [
             'name' => $user->name,
